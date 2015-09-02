@@ -1,11 +1,14 @@
 SERVER = serveur
 CLIENT = client
+LIBFT  = ./libft/libft.a
 
-all: $(SERVER) $(CLIENT)
-	@make -C libft 
+all: $(LIBFT) $(SERVER)
 
 $(SERVER):
 	@make -C server
+
+$(LIBFT):
+	@make -C libft
 
 clean:
 	@make clean -C server
