@@ -6,7 +6,7 @@
 /*   By: bmartins <bmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 13:49:46 by bmartins          #+#    #+#             */
-/*   Updated: 2015/06/11 15:47:54 by bmartins         ###   ########.fr       */
+/*   Updated: 2015/09/03 11:54:36 by bmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int					ft_isprint(int c);
 int					ft_isspace(int c);
 int					ft_strlen(const char *s);
 int					ft_atoi(const char *str);
+int					get_next_line(int const fd, char **line);
 int					ft_strequ(char const *s1, char const *s2);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);

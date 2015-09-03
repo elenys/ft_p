@@ -6,7 +6,7 @@
 #    By: bmartins <bmartins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/17 14:58:06 by bmartins          #+#    #+#              #
-#    Updated: 2015/06/11 15:49:08 by bmartins         ###   ########.fr        #
+#    Updated: 2015/09/03 11:52:59 by bmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_C = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 		ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c \
 		ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_lstadd.c \
 		ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstnew.c ft_lstmap.c \
-		ft_lstadd_end.c
+		ft_lstadd_end.c get_next_line.c
 
 FLAGS = -Wall -Wextra -Werror
 

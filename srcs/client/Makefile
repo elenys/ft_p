@@ -5,38 +5,46 @@
 #                                                     +:+ +:+         +:+      #
 #    By: bmartins <bmartins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/09/03 11:57:41 by bmartins          #+#    #+#              #
-#    Updated: 2015/09/03 13:29:06 by bmartins         ###   ########.fr        #
+#    Created: 2015/06/09 14:04:28 by bmartins          #+#    #+#              #
+#    Updated: 2015/09/03 12:30:21 by bmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SERVER = serveur
-CLIENT = client
-LIBFT  = ./libft/libft.a
+NAME = client
 
-all: $(LIBFT) $(SERVER) $(CLIENT)
+DIR_H = ../../incs/
 
-$(SERVER):
-	@make -C srcs/server
+DIR_C = ./srcs/
 
-$(CLIENT):
-	@make -C srcs/client
+DIR_O = ./objs/
 
-$(LIBFT):
-	@make -C libft
+FILE_C = client.c 
+
+FILE_O = $(FILE_C:.c=.o)
+
+SRC_C := $(addprefix $(DIR_C), $(FILE_C))
+
+SRC_O := $(addprefix $(DIR_O), $(FILE_O))
+
+FLAGS = -Wall -Wextra -Werror
+
+all: $(NAME)
+
+$(NAME): $(SRC_O)
+	@gcc -o $(NAME) $(SRC_O) -L ../../libft/ -lft
+	@mv $(NAME) ../../.
+
+$(SRC_O): $(SRC_C)
+	@gcc $(FLAGS) -c $(SRC_C) -I $(DIR_H)
+	@mkdir -p $(DIR_O)
+	@mv $(FILE_O) $(DIR_O)
 
 clean:
-	@make clean -C srcs/server
-	@make clean -C srcs/client
-	@make clean -C libft
+	@/bin/rm -rf $(DIR_O)
 
 fclean: clean
-	@make fclean -C srcs/server
-	@make fclean -C srcs/client
-	@make fclean -C libft
+	@/bin/rm -f ../../$(NAME)
 
 re: fclean all
-	@make re -C srcs/server
-	@make re -C srcs/client
 
 .PHONY: clean fclean cclean all re
