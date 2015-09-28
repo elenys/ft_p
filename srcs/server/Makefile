@@ -18,7 +18,8 @@ DIR_C = ./srcs/
 
 DIR_O = ./objs/
 
-FILE_C = server.c s_error.c s_socket.c
+FILE_C = server.c s_error.c s_socket.c s_crypto.c s_tools.c s_check_passwd.c \
+	s_add_user.c s_auth.c s_auth_free.c
 
 FILE_O = $(FILE_C:.c=.o)
 
