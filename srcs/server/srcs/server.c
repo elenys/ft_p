@@ -28,13 +28,11 @@ static void handle(int newsock)
 	while (login == NULL)
 	{
 		login = auth(newsock);
-		printf("login %s\n",login);
 		if (login == NULL)
-		{
 			write(newsock, "-1\n", 3);
-		}
 	}
 	write(newsock, "0\n",2);
+	printf("connected\n");
 	while (strcmp(buf, "EXIT"))
 	{
 		r = recv(newsock, buf, 1023, 0);

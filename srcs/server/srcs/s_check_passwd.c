@@ -18,11 +18,13 @@ static void		get_user(char **user, char **pwd)
 static char		*look_user(char *user)
 {
 	int		fd;
+	int		ret;
 	char	*line;
 	char	*pwd;
 
+	ret = 1;
 	fd = open("./pass.txt", O_RDONLY);
-	while (get_next_line(fd, &line) && fd != -1)
+	while ((ret = get_next_line(fd, &line)) >= 0)
 	{
 		get_user(&line, &pwd);
 		if (!ft_strcmp(line, user))
@@ -48,7 +50,7 @@ int				check_user(t_auth check)
 	char	*pwd;
 
 	pwd = look_user(check.user);
-	if (!pwd || !compare_passwd(pwd, check.pwd))
+	if (!pwd || !compare_passwd(check.pwd, pwd))
 		return (-1);
 	return (0);
 }
