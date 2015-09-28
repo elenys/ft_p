@@ -1,0 +1,3 @@
+root:*%%(McDO
+truc:*(+pMcDO
+salut:)ny+*McDO
