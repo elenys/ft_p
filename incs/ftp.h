@@ -15,8 +15,10 @@
 
 #include "libft.h"
 
+#include <fcntl.h>
 #include <netdb.h>
 #include <signal.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
