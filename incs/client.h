@@ -15,6 +15,6 @@
 
 #include "ftp.h"
 
-char	*auth(int sock);
+void		auth(int sock);
 
 #endif
