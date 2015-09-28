@@ -18,7 +18,10 @@ static int	is_valid(char *str)
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0)
+		{
+			printf("Invalid char dog fuck your syrian\n");
 			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -98,14 +101,16 @@ static int	check_valid_pwd(int connexion, int sock)
 	else
 		ret = concat(ret, ":0");
 	write(sock, ret, ft_strlen(ret));
-	return(0);
+	return(1);
 }
 
 void		auth(int sock)
 {
 	char			*rv;
 	char			*phrase;
+	int				ok;
 
+	ok = 0;
 	printf("Are u registred, yes/no?\n");
 	get_next_line(0, &rv);
 	while (1)
@@ -117,6 +122,11 @@ void		auth(int sock)
 				printf("Are u registred, yes/no?\n");
 				continue ;
 			}
+			else
+			{
+				ok = 1;
+				break ;
+			}
 		}
 		else if (ft_strcmp(rv, "no") == 0)
 			break ;
@@ -124,6 +134,8 @@ void		auth(int sock)
 			printf("Are u registred, yes/no?\n");
 		get_next_line(0, &rv);
 	}
+	if (ok != 1)
+	{
 	printf("Wanna sign in, yes/no ?\n");
 	get_next_line(0, &phrase);
 	while (1)
@@ -140,9 +152,14 @@ void		auth(int sock)
 			printf("Wanna sign in , yes/no\n");
 		get_next_line(0, &phrase);
 	}
-	free(phrase);
-	while (read(sock, &phrase, 3) != 3 || read(sock, &phrase, 2) != 2)
-		;
-	if (strcmp(phrase, "-1\n") == 0)
-		auth(sock);
+}
+	//free(phrase);
+printf("tanmer\n");
+	while (read(sock, &phrase, 3) == 0)
+	{
+		if (strcmp(phrase, "-1\n") == 0)
+			auth(sock);
+		else if (strcmp(phrase, "0\n") == 0)
+			break ;
+	}
 }
