@@ -23,12 +23,16 @@ static void handle(int newsock)
 	int		r;
 	char	*login;
 	char	buf[1024];
-	
+
+	login = NULL;
 	while (login == NULL)
 	{
 		login = auth(newsock);
+		printf("login %s\n",login);
 		if (login == NULL)
-			write(newsock, "-1\n", 2);
+		{
+			write(newsock, "-1\n", 3);
+		}
 	}
 	write(newsock, "0\n",2);
 	while (strcmp(buf, "EXIT"))

@@ -55,7 +55,8 @@ int		main(int ac, char **av)
 		usage(av[0]);
 	port = ft_atoi(av[2]);
 	sock = create_client(av[1], port);
-	write(sock, "Connexion client\n", 17);
+	auth(sock);
+	write(sock, "Connection client\n", 17);
 	while (!ret)
 	{
 		ft_putstr("Entrez votre phrase: ");

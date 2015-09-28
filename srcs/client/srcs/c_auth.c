@@ -1,8 +1,4 @@
-#include "libft.h"
 #include "client.h"
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 
 static int	is_valid(char *str)
 {
@@ -37,7 +33,7 @@ static char	*concat(char *s1, char *s2)
 	if (ft_strlen(s1) + ft_strlen(s2) > 21)
 	{
 		printf("string is too long\n");
-		return ;
+		return (NULL);
 	}
 	new_str = (char *)malloc(sizeof(char) * 20);
 	i = 0;
@@ -63,36 +59,35 @@ static int	check_valid_pwd(int connexion, int sock)
 {
 	char		*phrase;
 	char		*ret;
-	int			rv;
 
 	ret = (char *)malloc(sizeof(char) * 24);
 	printf("type a login (A-Z, a-z, 0-9), 10 char max\n");
-	rv = get_next_line(0, &ret);
+	get_next_line(0, &ret);
 	while(1)
 	{
 		if (ret == NULL)
-			rv = get_next_line(0, &ret);
+			get_next_line(0, &ret);
 		if (is_valid(ret) == 1)
 		{
 			printf("type a login (A-Z, a-z, 0-9), 10 char max\n");
 			free(ret);
-			rv = get_next_line(0, &ret);
+			get_next_line(0, &ret);
 		}
 		else
 			break ;
 	}
 	ret = concat(ret, ":");
 	printf("type a password (A-Z, a-z, 0-9), 10 char max\n");
-	rv = get_next_line(0, &phrase);
+	get_next_line(0, &phrase);
 	while(1)
 	{
 		if (phrase == NULL)
-			rv = get_next_line(0, &phrase);
+			get_next_line(0, &phrase);
 		if (is_valid(phrase) == 1)
 		{
 			printf("type a password (A-Z, a-z, 0-9), 10 char max\n");
 			free(phrase);
-			rv = get_next_line(0, &phrase);
+			get_next_line(0, &phrase);
 		}
 		else
 			break ;
@@ -110,10 +105,9 @@ char		*auth(int sock)
 {
 	char			*rv;
 	char			*phrase;
-	int				rd;
 
 	printf("Are u registred, yes/no?\n");
-	rd = get_next_line(0, &rv);
+	get_next_line(0, &rv);
 	while (1)
 	{
 		if (ft_strcmp(rv, "yes") == 0)
@@ -128,10 +122,10 @@ char		*auth(int sock)
 			break ;
 		else
 			printf("Are u registred, yes/no?\n");
-		rd = get_next_line(0, &rv);
+		get_next_line(0, &rv);
 	}
 	printf("Wanna sign in, yes/no ?\n");
-	rd = get_next_line(0, &phrase);
+	get_next_line(0, &phrase);
 	while (1)
 	{
 		if (ft_strcmp(phrase, "yes") == 0)
@@ -142,9 +136,10 @@ char		*auth(int sock)
 			write(sock, "EXIT\n", 5);
 			exit(0);
 		}
-		rd = get_next_line(0, &phrase);
+		get_next_line(0, &phrase);
 	}
-	read (sock, &ret);
-	if (strcmp(ret, "-1\n") == 0)
+	free(phrase);
+	read (sock, &phrase, 3);
+	if (strcmp(phrase, "-1\n") == 0)
 		auth(sock);
 }

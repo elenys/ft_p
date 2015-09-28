@@ -15,6 +15,7 @@
 
 #include "libft.h"
 
+#include <stdio.h>
 #include <fcntl.h>
 #include <netdb.h>
 #include <signal.h>

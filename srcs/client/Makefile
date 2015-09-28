@@ -18,7 +18,7 @@ DIR_C = ./srcs/
 
 DIR_O = ./objs/
 
-FILE_C = client.c 
+FILE_C = client.c c_auth.c
 
 FILE_O = $(FILE_C:.c=.o)
 
