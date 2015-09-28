@@ -7,7 +7,7 @@ static char	rot_13(char c)
 {
 	if (c >= 'z' - 13)
 	{
-		if (c - 'z' +_48 == 58)
+		if (c - 'z' + 48 == 58)
 			return ('{');
 		return (c - 'z' + 48);
 	}

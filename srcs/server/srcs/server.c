@@ -21,8 +21,16 @@ static void wait_for_child(int sig)
 static void handle(int newsock)
 {
 	int		r;
+	char	*login;
 	char	buf[1024];
-
+	
+	while (login == NULL)
+	{
+		login = auth(newsock);
+		if (login == NULL)
+			write(newsock, "-1\n", 2);
+	}
+	write(newsock, "0\n",2);
 	while (strcmp(buf, "EXIT"))
 	{
 		r = recv(newsock, buf, 1023, 0);
