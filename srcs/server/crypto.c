@@ -1,9 +1,12 @@
-#include "serveur.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "libft.h"
+
 
 static char	rot_13(char c)
 {
 	if (c >= 'z' - 13)
-		return (c + 13 - 48);
+		return (c - 'z' + 48);
 	return (c + 13);
 }
 
