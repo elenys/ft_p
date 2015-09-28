@@ -136,6 +136,8 @@ char		*auth(int sock)
 			write(sock, "EXIT\n", 5);
 			exit(0);
 		}
+		else
+			printf("Wanna sign in , yes/no\n");
 		get_next_line(0, &phrase);
 	}
 	free(phrase);
