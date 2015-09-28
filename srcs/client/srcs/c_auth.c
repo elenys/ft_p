@@ -144,4 +144,7 @@ char		*auth(int sock)
 		}
 		rd = get_next_line(0, &phrase);
 	}
+	read (sock, &ret);
+	if (strcmp(ret, "-1\n") == 0)
+		auth(sock);
 }
