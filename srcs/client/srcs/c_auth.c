@@ -101,7 +101,7 @@ static int	check_valid_pwd(int connexion, int sock)
 	return(0);
 }
 
-char		*auth(int sock)
+void		auth(int sock)
 {
 	char			*rv;
 	char			*phrase;
@@ -141,7 +141,8 @@ char		*auth(int sock)
 		get_next_line(0, &phrase);
 	}
 	free(phrase);
-	read (sock, &phrase, 3);
+	while (read(sock, &phrase, 3) != 3 || read(sock, &phrase, 2) != 2)
+		;
 	if (strcmp(phrase, "-1\n") == 0)
 		auth(sock);
 }
