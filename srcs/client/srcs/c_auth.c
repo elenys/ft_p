@@ -101,7 +101,7 @@ static int	check_valid_pwd(int connexion, int sock)
 	return(0);
 }
 
-char		*auth(int sock)
+void		auth(int sock)
 {
 	char			*rv;
 	char			*phrase;
