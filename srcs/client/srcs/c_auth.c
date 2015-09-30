@@ -6,7 +6,7 @@
 /*   By: aiwanesk <aiwanesk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/30 11:17:13 by aiwanesk          #+#    #+#             */
-/*   Updated: 2015/09/30 11:50:09 by aiwanesk         ###   ########.fr       */
+/*   Updated: 2015/09/30 15:14:32 by aiwanesk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,16 @@ static void	auth_server(int sock)
 	char		*readed;
 
 	printf ("on est bien dans auth\n");
-	while (read(sock, &readed, 3) == 0)
+	while (1)
 	{
-		if (ft_strcmp(readed, "0\n") == 0)
+		printf ("ok\n");
+		get_next_line(sock, &readed);
+		printf("readed = %s ,ok\n", readed);
+		if (ft_atoi(readed) == 0)
 		{
 			free(readed);
 			printf("ok tout va bien signale recu 0\n");
+			exec_command(sock);
 		}
 		else if (ft_strcmp(readed, "-1\n") == 0)
 		{
@@ -161,12 +165,14 @@ static void	auth_server(int sock)
 			free(readed);
 			auth(sock);
 		}
-		else if (ft_strcmp(readed, "-3\n") == 0)
+		else if (ft_atoi(readed) == -3)
 		{
 			printf("U will be redirected on sign_in service\n");
 			free(readed);
 			sign_in(sock);
 		}
+		else
+			printf ("no case\n");
 	}
 }
 
@@ -201,64 +207,3 @@ void		auth(int sock)
 		sign_in(sock);
 	auth_server(sock);
 }
-
-/*void		auth(int sock)
-{
-	char			*rv;
-	char			*phrase;
-	int				ok;
-
-	phrase = NULL;
-	ok = 0;
-	printf("Are u registred, yes/no?\n");
-	get_next_line(0, &rv);
-	while (1)
-	{
-		if (ft_strcmp(rv, "yes") == 0)
-		{
-			if (check_valid_pwd(1, sock) == 0)
-			{
-				printf("Are u registred, yes/no?\n");
-				continue ;
-			}
-			else
-			{
-				ok = 1;
-				break ;
-			}
-		}
-		else if (ft_strcmp(rv, "no") == 0)
-			break ;
-		else
-			printf("Are u registred, yes/no?\n");
-		get_next_line(0, &rv);
-	}
-	if (ok != 1)
-	{
-	printf("Wanna sign in, yes/no ?\n");
-	get_next_line(0, &phrase);
-	while (1)
-	{
-		if (ft_strcmp(phrase, "yes") == 0)
-			check_valid_pwd(0, sock);
-		else if (ft_strcmp(phrase, "no") == 0)
-		{
-			printf("U wont test my projetct\n");
-			write(sock, "EXIT\n", 5);
-			exit(0);
-		}
-		else
-			printf("Wanna sign in , yes/no\n");
-		get_next_line(0, &phrase);
-	}
-}
-	free(phrase);
-printf("tanmer\n");
-	while (read(sock, &phrase, 3) == 0)
-	{
-		if (strcmp(phrase, "-1\n") == 0)
-			auth(sock);
-		else if (strcmp(phrase, "0\n") == 0)
-			break ;
-	}
-}*/

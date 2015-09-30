@@ -6,7 +6,7 @@
 /*   By: bmartins <bmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/03 11:07:31 by bmartins          #+#    #+#             */
-/*   Updated: 2015/09/03 13:39:21 by bmartins         ###   ########.fr       */
+/*   Updated: 2015/09/30 15:24:06 by aiwanesk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int		main(int ac, char **av)
 	int					sock;
 	int					port;
 	int					ret;
-	int					rv;
-	char				*phrase;
+//	int					rv;
+//	char				*phrase;
 
 	ret = 0;
 	if (ac != 3)
@@ -57,7 +57,7 @@ int		main(int ac, char **av)
 	sock = create_client(av[1], port);
 	auth(sock);
 	write(sock, "Connection client\n", 17);
-	while (!ret)
+	/*while (!ret)
 	{
 		ft_putstr("Entrez votre phrase: ");
 		while ((rv = get_next_line(0, &phrase)) > 1)
@@ -70,7 +70,7 @@ int		main(int ac, char **av)
 		}
 		write(sock, phrase, ft_strlen(phrase));
 		ft_strdel(&phrase);
-	}
+	}*/
 	close(sock);
 	return (0);
 }
