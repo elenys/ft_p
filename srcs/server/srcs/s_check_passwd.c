@@ -24,7 +24,7 @@ t_auth			user_exist(char *user)
 	t_auth	auth;
 
 	fd = open(USER_FILE, O_RDONLY);
-	while (get_next_line(fd, &line) >= 0 || auth.user != NULL)
+	while (get_next_line(fd, &line) >= 0 && auth.user != NULL)
 		auth = parse_user(line, user);
 	free(line);
 	close(fd);
@@ -43,6 +43,7 @@ int				connect_user(t_auth check, int sock, struct sockaddr_in sock_info)
 	t_auth	auth;
 
 	(void)sock_info;
+	ft_putendl("FCT_CONNECT_USER");
 	auth = user_exist(check.user);
 	if (auth.user == NULL)
 	{
