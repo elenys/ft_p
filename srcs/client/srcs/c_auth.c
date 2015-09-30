@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   c_auth.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aiwanesk <aiwanesk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/09/30 11:17:13 by aiwanesk          #+#    #+#             */
+/*   Updated: 2015/09/30 11:50:09 by aiwanesk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "client.h"
 
 static int	is_valid(char *str)
@@ -104,12 +116,99 @@ static int	check_valid_pwd(int connexion, int sock)
 	return(1);
 }
 
+static void	sign_in(int sock)
+{
+	char		*readed;
+
+	printf("Wanna sign in, yes/no ?\n");
+	get_next_line(0, &readed);
+	if (ft_strcmp(readed, "yes") == 0)
+		check_valid_pwd(0, sock);
+	else if (ft_strcmp(readed, "no") == 0)
+	{
+		printf("U wont test my projetct\n");
+		write(sock, "EXIT\n", 5);
+		exit(0);
+	}
+	else
+	{
+		free(readed);
+		sign_in(sock);
+	}
+}
+
+static void	auth_server(int sock)
+{
+	char		*readed;
+
+	printf ("on est bien dans auth\n");
+	while (read(sock, &readed, 3) == 0)
+	{
+		if (ft_strcmp(readed, "0\n") == 0)
+		{
+			free(readed);
+			printf("ok tout va bien signale recu 0\n");
+		}
+		else if (ft_strcmp(readed, "-1\n") == 0)
+		{
+			free(readed);
+			printf("Someone has ever created this account\n");
+			sign_in(sock);
+		}
+		else if (ft_strcmp(readed, "-2\n") == 0)
+		{
+			printf("Wrong password , call auth function again\n");
+			free(readed);
+			auth(sock);
+		}
+		else if (ft_strcmp(readed, "-3\n") == 0)
+		{
+			printf("U will be redirected on sign_in service\n");
+			free(readed);
+			sign_in(sock);
+		}
+	}
+}
+
 void		auth(int sock)
+{
+	char		*readed;
+	int			ok;
+
+	ok = 0;
+	printf ("Are u registred yes/no?\n");
+	get_next_line(0, &readed);
+	while (ok == 0)
+	{
+		if (ft_strcmp(readed, "yes") == 0)
+		{
+			if (check_valid_pwd(1, sock) == 0)
+			{
+				printf ("Are u registred yes/no?\n");
+				ok = -1;
+			}
+			else
+				ok++;
+		}
+		else if (ft_strcmp(readed, "no") == 0)
+			ok = -1;
+		else
+			printf ("Are u registred yes/no?\n");
+		if (ok == 0)
+			get_next_line(0, &readed);
+	}
+	if (ok <= -1)
+		sign_in(sock);
+	auth_server(sock);
+}
+
+/*void		auth(int sock)
 {
 	char			*rv;
 	char			*phrase;
 	int				ok;
 
+	phrase = NULL;
 	ok = 0;
 	printf("Are u registred, yes/no?\n");
 	get_next_line(0, &rv);
@@ -153,7 +252,7 @@ void		auth(int sock)
 		get_next_line(0, &phrase);
 	}
 }
-	//free(phrase);
+	free(phrase);
 printf("tanmer\n");
 	while (read(sock, &phrase, 3) == 0)
 	{
@@ -162,4 +261,4 @@ printf("tanmer\n");
 		else if (strcmp(phrase, "0\n") == 0)
 			break ;
 	}
-}
+}*/
