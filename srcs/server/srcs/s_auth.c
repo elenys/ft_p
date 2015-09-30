@@ -33,9 +33,11 @@ void			auth(int sock, struct sockaddr_in sock_info)
 	t_auth	auth;
 
 	ret = 0;
+	ft_putendl("FCT_AUTH");
 	while (ret == 0)
 	{
 		str_client_auth = get_client_auth(sock);
+		ft_putendl("Get CLIENT INFO");
 		auth = add_to_struct(str_client_auth);
 		if (auth.type == CREATE)
 			create_user(auth, sock, sock_info);

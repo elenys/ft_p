@@ -43,6 +43,7 @@ int				connect_user(t_auth check, int sock, struct sockaddr_in sock_info)
 	t_auth	auth;
 
 	(void)sock_info;
+	ft_putendl("FCT_CONNECT_USER");
 	auth = user_exist(check.user);
 	if (auth.user == NULL)
 	{
