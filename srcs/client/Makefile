@@ -6,7 +6,7 @@
 #    By: bmartins <bmartins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/06/09 14:04:28 by bmartins          #+#    #+#              #
-#    Updated: 2015/09/03 12:30:21 by bmartins         ###   ########.fr        #
+#    Updated: 2015/09/30 14:07:12 by aiwanesk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ DIR_C = ./srcs/
 
 DIR_O = ./objs/
 
-FILE_C = client.c c_auth.c
+FILE_C = client.c c_auth.c c_exec_command.c
 
 FILE_O = $(FILE_C:.c=.o)
 

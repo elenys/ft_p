@@ -6,7 +6,7 @@
 /*   By: bmartins <bmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/03 11:09:35 by bmartins          #+#    #+#             */
-/*   Updated: 2015/09/30 14:51:40 by bmartins         ###   ########.fr       */
+/*   Updated: 2015/09/30 15:25:41 by aiwanesk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void handle(int newsock, struct sockaddr_in sock_info)
 	char	buf[1024];
 
 	auth(newsock, sock_info);
-	while (strcmp(buf, "EXIT"))
+	while (ft_strcmp(buf, "EXIT"))
 	{
 		r = recv(newsock, buf, 1023, 0);
 		buf[r] = 0;
@@ -32,7 +32,7 @@ static void handle(int newsock, struct sockaddr_in sock_info)
 		{
 			ft_putstr("received ");
 			ft_putnbr(r);
-			ft_putstr(" bytes: ");
+			ft_putstr("bytes: ");
 			ft_putendl(buf);
 		}
 	}

@@ -24,7 +24,7 @@ t_auth			user_exist(char *user)
 	t_auth	auth;
 
 	fd = open(USER_FILE, O_RDONLY);
-	while (get_next_line(fd, &line) >= 0 || auth.user != NULL)
+	while (get_next_line(fd, &line) >= 0 && auth.user != NULL)
 		auth = parse_user(line, user);
 	free(line);
 	close(fd);
