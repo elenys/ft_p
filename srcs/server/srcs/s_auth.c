@@ -9,7 +9,8 @@ static t_auth	add_to_struct(char *str_auth)
 	auth.user = ft_strdup(tab[0]);
 	auth.pwd = ft_strdup(tab[1]);
 	auth.type = ft_atoi(tab[2]);
-	//free_2d_tab((void **)tab);
+	free_2d_tab((void **)tab);
+	free(str_auth);
 	return(auth);
 }
 
@@ -25,23 +26,23 @@ static char		*get_client_auth(int sock)
 	return (buf);
 }
 
-char			*auth(int sock)
+void			auth(int sock, struct sockaddr_in sock_info)
 {
 	int		ret;
-	char	*user;
-	char	*str_auth;
+	char	*str_client_auth;
 	t_auth	auth;
 
 	ret = 0;
-	user = NULL;
-	str_auth = get_client_auth(sock);
-	auth = add_to_struct(str_auth);
-	if (auth.type == CREATE)
-		ret = add_user(auth);
-	if (ret == 0)
-		ret = check_user(auth);
-	if (ret == 0)
-		user = ft_strdup(auth.user);
+	while (ret == 0)
+	{
+		str_client_auth = get_client_auth(sock);
+		auth = add_to_struct(str_client_auth);
+		if (auth.type == CREATE)
+			create_user(auth, sock, sock_info);
+		else if (auth.type == CONNECTION)
+			connect_user(auth, sock, sock_info);
+		else
+			ft_putendl("error recuperation");
+	}
 	free_auth_struct(auth);
-	return (user);
 }

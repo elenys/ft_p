@@ -6,7 +6,7 @@
 /*   By: bmartins <bmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/03 11:09:35 by bmartins          #+#    #+#             */
-/*   Updated: 2015/09/03 15:43:04 by bmartins         ###   ########.fr       */
+/*   Updated: 2015/09/30 14:51:40 by bmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,12 @@ static void wait_for_child(int sig)
 	while (waitpid(-1, NULL, WNOHANG) > 0);
 }
 
-static void handle(int newsock)
+static void handle(int newsock, struct sockaddr_in sock_info)
 {
 	int		r;
-	char	*login;
 	char	buf[1024];
 
-	login = NULL;
-	while (login == NULL)
-	{
-		login = auth(newsock);
-		if (login == NULL)
-			write(newsock, "-1\n", 3);
-	}
-	write(newsock, "0\n",2);
-	printf("connected\n");
+	auth(newsock, sock_info);
 	while (strcmp(buf, "EXIT"))
 	{
 		r = recv(newsock, buf, 1023, 0);
@@ -59,13 +50,6 @@ void	signal_handler(void)
 		s_error("to create sigchild");
 }
 
-void	print_counter(size_t counter)
-{
-	ft_putstr("counter = ");
-	ft_putnbr(counter);
-	ft_putchar('\n');
-}
-
 void	print_connexion(struct sockaddr_in sock_info)
 {
 	ft_putstr("Got a connection from ");
@@ -78,31 +62,21 @@ void	print_connexion(struct sockaddr_in sock_info)
 static void main_serv(int sock, int newsock)
 {
 	int					pid;
-	size_t				counter;
-	size_t				*pcounter;
 	unsigned int		sock_size;
 	struct sockaddr_in	sock_info;
 
-	counter = 0;
-	pcounter = &counter;
 	while (1)
 	{
 		newsock = accept(sock, (struct sockaddr*)&sock_info, &sock_size);
-		print_connexion(sock_info);
 		if ((pid = fork()) == -1)
 			s_error_fork(newsock);
 		else if (pid > 0)
-		{
-			(*pcounter)++;
-			print_counter(counter);
 			close(newsock);
-		}
 		else if (pid == 0)
 		{
+			print_connexion(sock_info);
 			close(sock);
-			handle(newsock);
-			(*pcounter)--;
-			print_counter(counter);
+			handle(newsock, sock_info);
 			exit(0);
 		}
 	}
