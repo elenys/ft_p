@@ -31,9 +31,9 @@ int			create_user(t_auth user, int sock, struct sockaddr_in sock_info)
 	t_auth auth;
 
 	(void)sock_info;
-	ft_putendl("FCT_CREATE_USER");
 	auth = user_exist(user.user);
-	if (auth.user != NULL)
+	ft_putendl(user.user);
+	if (auth.user == NULL)
 	{
 		ft_putendl("User successfully added");
 		if (add_user(user) >= 0)
